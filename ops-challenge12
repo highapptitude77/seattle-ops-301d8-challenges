@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+
+# Script Name:                  Ops Challenge: Python Requests Library
+# Author:                       Wayne Brandon
+# Date of latest revision:      06/14/2023
+# Purpose:                      Educatioal - Learning to work Python Requests Library
+
+# Import Libraries
+import requests
+# Declaration of variables
+# prompt user to type a string as the variable for the destination URL
+ url_inp = input('Please type the destination URL:')
+
+# prompt user to type a string input as the variable for the URL destiantion
+request_type = ("Please select a HTTP Method ['1: GET', '2: POST', '3: PUT', '4: DELETE', '5: HEAD', '6: PATCH', '7: OPTIONS']:")
+# print to the screen the entire request your script is about to send. Ask the user to confirm before proceeding.
+# Initialize an empty string variable to be used in functions
+choice = ""
+# Initialize an empty string variable to be used in functions
+response = "" 
+# Declaration of functions
+# Iterate through the elements of the url_inp variable array, printing menu items on separate lines
+def menu():
+    for req in request_type:
+        print(req)
+
+# Accepts user input from the menu selection and makes the corresponding request call       
+def menu_selection(var):
+    var = int(var)
+    global choice
+    if var == 1:
+        choice = input("Do you wish to send the following request: request.get(" + url_inp + ")? y/n: ")
+    elif var == 2:
+        choice = input("Do you wish to send the following request: request.get(" + url_inp + ")? y/n: ")
+    elif var == 3:
+        choice = input("Do you wish to send the following request: request.get(" + url_inp + ")? y/n: ")   
+    elif var == 4:
+        choice = input("Do you wish to send the following request: request.get(" + url_inp + ")? y/n: ")
+    elif var == 5:
+        choice = input("Do you wish to send the following request: request.get(" + url_inp + ")? y/n: ")
+    elif var == 6:
+        choice = input("Do you wish to send the following request: request.get(" + url_inp + ")? y/n: ")
+    elif var == 7:
+        choice = input("Do you wish to send the following request: request.get(" + url_inp + ")? y/n: ")
+    else:
+        print ("That was an invalid response, please choose a valid meun option")         
+
+
+# Upon confirmation to send request, print status code
+def run_request(menu_inp, selection):
+    global response
+    menu_inp = int(menu_inp)
+    if selection == "y" and menu_inp == 1:
+        response = requests.get(url_inp)
+        print(response.status_code)
+    elif selection == "y" and menu_inp == 2:
+        response = requests.post(url_inp)
+        print(response.status_code)  
+    elif selection == "y" and menu_inp ==3:
+        response = requests.put(url_inp)
+        print(response.status_code)
+    elif selection == "y" and menu_inp ==4:   
+        response = requests.delete(url_inp)
+        print(response.status_code)
+    elif selection == "y" and menu_inp ==5:    
+        response = requests.head(url_inp)
+        print(response.status_code)
+    elif selection == "y" and menu_inp ==6:    
+        response = requests.patch(url_inp)
+        print(response.status_code)
+    elif selection == "y" and menu_inp ==7:        
+        response = requests.options(url_inp)
+        print(response.status_code)
+    else:   
+        print ("Error, would you please try agai: (")
+
+# Inputs the status code and covert it to a string for comparison Then print the response from the selection of known responses.
+def status_messages(var):
+    if str(response.status_code) == "200":
+       print("Success")
+       print(response.headers)
+    elif str(response.status_code) == "400":
+       print("Request not successful")
+       print(response.headers)
+    elif str(response.status_code) == "401":
+       print("Not Authorized")         
+       print(response.headers) 
+    elif str(response.status_code) == "402":
+        print("Payment Required")
+        print(response.headers)
+    elif str(response.status_code) == "403":
+        print("Forbidden")
+        print(response.headers)
+    elif str(response.status_code) == "404":
+        print("Not Found")
+        print(response.headers)
+    elif str(response.status_code) == "405":
+        print("Method Not Allowed")
+        print(response.headers)    
+    elif str(response.status_code) == "406":
+        print("Not Acceptable")
+        print(response.headers)    
+    else:
+            print("That request is unknown, Please try again")
+
+# Main
+menu()
+# menu selection request
+inp = input ("Please select a menu option:")
+menu_selection(inp)
+run_request(inp, choice)
+status_messages(response)
+
+
+
+# End
